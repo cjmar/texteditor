@@ -1,19 +1,23 @@
 /*
-	Simple text editor using GLUT
-	Made as project 2 for Computer Graphics class
-	-edit text
-	-click into text
-	-blinking cursor
-	-save to file (hard coded to c:/temp/saved.txt)
-	-each letter can have its own font
-	-each letter can have its own color
-	-options changed via right click menu
-
-
 	Author: Cody Marshall
 	www.github.com/texteditor
 
+	Simple text editor using GLUT
+	Made as project 2 for Computer Graphics class
+	Features:
+		-edit text
+		-click into text
+		-blinking cursor
+		-save to file (hard coded to c:/temp/saved.txt)
+		-each letter can have its own font
+		-each letter can have its own color
+		-options changed via right click menu
 
+	NOTE:
+		Code has been removed from this file which was done by a project partner. 
+		The only feature this code did was a seperate help window which could be
+		closed using a menu item or key press. No other item has been touched post
+		grading, the grade recieved was 100%.
 
 	63~ characters long
 	40~ rows
@@ -25,7 +29,6 @@
 #include <string>
 #include <vector>
 #include <fstream>
-
 
 /*
 63~ characters long
@@ -76,10 +79,8 @@ struct screenText
 //Globals
 screenText text;			//Text on screen
 int mainWindow;				//main window ID
-int helpWindow;				//help window ID
 settings setting;			//setting object
 bool blink = true;			//blink for caret
-bool showHelp = true;
 
 //prototypes
 void backspace();
@@ -117,113 +118,6 @@ void saveText()
 	}
 
 	fout.close();
-}
-
-void myHelpKeyHandler(unsigned char key, int x, int y) {
-	//cout << key;
-
-	if (key == 'x') {
-		glutIconifyWindow();
-	}
-
-	glFlush();
-}
-
-void drawHelp() {
-	glColor3f(0, 0, 0);
-
-	//-----------------------------------------------------------------------------
-	glRasterPos2i(-200, 140);
-
-	std::string welcome = "To begin, click on the editor window and type some text";
-
-	for (unsigned int i = 0; i < welcome.size(); i++) {
-		//cout << msg[i];
-
-		char tempChar = welcome[i];
-
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, tempChar);
-	}
-	//-----------------------------------------------------------------------------
-
-
-	//-----------------------------------------------------------------------------
-	glRasterPos2i(-200, 120);
-
-	std::string instructions = "Right click the text editor window and navigate through the window to";
-
-	for (unsigned int i = 0; i < instructions.size(); i++) {
-		//cout << msg[i];
-
-		char tempChar = instructions[i];
-
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, tempChar);
-	}
-
-	//-----------------------------------------------------------------------------
-	glRasterPos2i(-200, 110);
-
-	std::string instructions2 = "change the font type and color";
-
-	for (unsigned int i = 0; i < instructions2.size(); i++) {
-		//cout << msg[i];
-
-		char tempChar = instructions2[i];
-
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, tempChar);
-	}
-
-
-	//-----------------------------------------------------------------------------
-	glRasterPos2i(-200, 90);
-
-	std::string save = "Right click the text editor window and navigate through the window to";
-
-	for (unsigned int i = 0; i < save.size(); i++) {
-		//cout << msg[i];
-
-		char tempChar = save[i];
-
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, tempChar);
-	}
-
-	//-----------------------------------------------------------------------------
-	glRasterPos2i(-200, 80);
-
-	std::string save2 = "save your text in the C:/temp directory";
-
-	for (unsigned int i = 0; i < save2.size(); i++) {
-		//cout << msg[i];
-
-		char tempChar = save2[i];
-
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, tempChar);
-	}
-
-	//-----------------------------------------------------------------------------
-	glRasterPos2i(-200, 60);
-
-	std::string closeWindow = "Right click the editor window to show or hide this window";
-
-	for (unsigned int i = 0; i < closeWindow.size(); i++) {
-		//cout << msg[i];
-
-		char tempChar = closeWindow[i];
-
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, tempChar);
-	}
-
-	glFlush();
-}
-
-void helpDisplayCallback()
-{
-
-	glClear(GL_COLOR_BUFFER_BIT);	// draw the background
-
-	drawHelp();
-
-	glFlush(); // flush out the buffer contents
 }
 
 void drawPoints()
@@ -519,10 +413,7 @@ Auto updates changes etc
 */
 void timeFunc(int id_in)
 {
-	glutSetWindow(mainWindow);
 	mainDisplayCallback();
-	glutSetWindow(helpWindow);
-	helpDisplayCallback();
 	glutTimerFunc(15, timeFunc, 1);
 }
 
@@ -557,19 +448,7 @@ void mainMenuCallback(int id_in)
 		exit(0);
 		break;
 
-	case 5: //show/hide help window
-		if (showHelp) {
-			glutSetWindow(helpWindow);
-			glutIconifyWindow();
-			showHelp = !showHelp;
-		}
-		else {
-			glutSetWindow(helpWindow);
-			glutShowWindow();
-			helpDisplayCallback();
-			showHelp = !showHelp;
-			std::cout << id_in;
-		}
+	case 5:
 		break;
 
 	case 6: //Change oclor to black
@@ -626,7 +505,7 @@ int main()
 	glutInitWindowSize(400, 600);			// specify a window size
 	glutInitWindowPosition(100, 0);			// specify a window position
 	mainWindow = glutCreateWindow("Editor");// create a titled window
-	//std::cout << mainWindow;
+
 	glClearColor(1, 1, 1, 0);				// specify a background clor: white 
 	gluOrtho2D(-200, 200, -300, 300);		// specify a viewing area
 
@@ -651,7 +530,6 @@ int main()
 
 	//Main menu
 	glutCreateMenu(mainMenuCallback);
-	glutAddMenuEntry("Help", 5);
 	glutAddSubMenu("Color", colorMenu);
 	glutAddSubMenu("Font", fontMenu);
 
@@ -665,19 +543,6 @@ int main()
 	{
 		text.rowSize.push_back(0);
 	}
-
-	//Setup for info window
-	glutInitWindowSize(400, 400);
-	glutInitWindowPosition(650, 100);
-	helpWindow = glutCreateWindow("Info");
-
-	glClearColor(0.9, 0.9, 0.9, 0);		// specify a background color 
-	gluOrtho2D(-200, 200, -200, 200);   // specify a viewing area
-	glutKeyboardFunc(myHelpKeyHandler);
-
-	glutDisplayFunc(helpDisplayCallback);
-
-	helpDisplayCallback();
 
 	glutMainLoop();
 
