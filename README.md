@@ -11,4 +11,4 @@ Made as project 2 for Computer Graphics class at Missouri State University
   <li>options changed via right click menu</li>
  </ul>
 <br>
-![alt text](https://github.com/cjmar/texteditor/blob/master/image/demo.gif)
+![alt text](https://raw.githubusercontent.com/cjmar/texteditor/master/image/demo.gif)
