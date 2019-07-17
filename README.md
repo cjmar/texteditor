@@ -10,3 +10,5 @@ Made as project 2 for Computer Graphics class at Missouri State University
   <li>each letter can have its own color</li>
   <li>options changed via right click menu</li>
  </ul>
+<br>
+![alt text](https://github.com/cjmar/snake/blob/master/texteditor/image/demo.gif)
