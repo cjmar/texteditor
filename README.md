@@ -12,3 +12,5 @@ Made as project 2 for Computer Graphics class at Missouri State University
  </ul>
 
 ![alt text](https://github.com/cjmar/texteditor/blob/master/screenshots/demo.gif)
+
+![alt text](https://github.com/cjmar/texteditor/blob/master/screenshots/options.gif)
