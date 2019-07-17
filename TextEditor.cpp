@@ -17,7 +17,7 @@
 		Code has been removed from this file which was done by a project partner. 
 		The only feature this code did was a seperate help window which could be
 		closed using a menu item or key press. No other item has been touched post
-		grading, the grade recieved was 100%.
+		grading other than the header, the grade recieved was 100%.
 
 	63~ characters long
 	40~ rows
